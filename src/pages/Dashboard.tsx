@@ -12,17 +12,19 @@ import { ActivityTimeline } from '@/components/ActivityTimeline';
 import { DataExport } from '@/components/DataExport';
 
 const Dashboard = () => {
-  const { user, signOut } = useAuth();
+  const { user, signOut, session } = useAuth();
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/auth');
+    const email = session?.user?.email ?? user?.email;
+    if (!email) {
+      // not logged in -> show auth page
+      navigate('/auth', { replace: true });
     } else {
       checkAdminStatus();
     }
-  }, [user, navigate]);
+  }, [session, user, navigate]);
 
   const checkAdminStatus = async () => {
     if (!user) return;
