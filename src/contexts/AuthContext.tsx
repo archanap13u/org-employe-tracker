@@ -53,6 +53,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       email,
       password,
     });
+
+    if (!error) {
+      try {
+        const { data, error: rpcError } = await supabase
+          .rpc('authenticate_user', { _email: email, _password: password });
+
+        if (!rpcError && Array.isArray(data) && data.length > 0) {
+          const row = data[0] as any;
+          if (row.is_admin) {
+            // redirect to admin page
+            window.location.href = '/admin';
+          }
+        } else {
+          // fallback: if RPC failed but email matches known admin email, redirect
+          if (email === 'admin@company.com') {
+            window.location.href = '/admin';
+          }
+        }
+      } catch {
+        // silent fallback; don't block sign-in flow
+        if (email === 'admin@company.com') {
+          window.location.href = '/admin';
+        }
+      }
+    }
+
     return { error };
   };
 
