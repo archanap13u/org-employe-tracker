@@ -64,18 +64,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           if (row.is_admin) {
             // redirect to admin page
             window.location.href = '/admin';
+            return { error };
+          } else {
+            // redirect to normal dashboard for authenticated non-admin users
+            window.location.href = '/dashboard';
+            return { error };
           }
         } else {
-          // fallback: if RPC failed but email matches known admin email, redirect
+          // RPC failed: fallback behavior
           if (email === 'admin@company.com') {
             window.location.href = '/admin';
+          } else {
+            window.location.href = '/dashboard';
           }
+          return { error };
         }
       } catch {
         // silent fallback; don't block sign-in flow
         if (email === 'admin@company.com') {
           window.location.href = '/admin';
+        } else {
+          window.location.href = '/dashboard';
         }
+        return { error };
       }
     }
 
