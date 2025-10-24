@@ -78,8 +78,8 @@ BEGIN
 END;
 $$;
 
--- Optionally grant execute to anon or the app role if needed:
--- GRANT EXECUTE ON FUNCTION public.authenticate_user(TEXT, TEXT) TO anon;
+-- Grant RPC execute to anon so frontend can call authenticate_user
+GRANT EXECUTE ON FUNCTION public.authenticate_user(TEXT, TEXT) TO anon;
 
 -- RLS policy for user_roles table
 CREATE POLICY "Users can view their own roles"
