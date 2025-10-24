@@ -17,11 +17,6 @@ const Auth = () => {
   const { signUp, signIn, user } = useAuth();
   const navigate = useNavigate();
 
-  if (user) {
-    navigate('/');
-    return null;
-  }
-
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password || !fullName) {
@@ -36,7 +31,7 @@ const Auth = () => {
       toast.error(error.message);
     } else {
       toast.success('Account created successfully!');
-      navigate('/');
+      navigate('/'); // optional: keep root (login) after signup
     }
   };
 
@@ -54,7 +49,8 @@ const Auth = () => {
       toast.error(error.message);
     } else {
       toast.success('Signed in successfully!');
-      navigate('/');
+      // Do NOT navigate here — AuthContext.signIn handles admin/dashboard redirects
+      // navigate('/');
     }
   };
 
