@@ -14,7 +14,7 @@ export default function AdminPage() {
       return;
     }
 
-    // simple check: only allow admin@company.com to view this page
+    // allow only admin@company.com here (or extend with role check)
     if (email !== 'admin@company.com') {
       navigate('/dashboard', { replace: true });
     }
@@ -23,7 +23,7 @@ export default function AdminPage() {
   return (
     <main style={{ padding: 24 }}>
       <h1>Admin Dashboard</h1>
-      <p>Welcome, admin. If you see this page, you have access.</p>
+      <p>Welcome, admin. If you see this page you are authorized.</p>
     </main>
   );
 }
