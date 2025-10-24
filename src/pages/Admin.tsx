@@ -9,12 +9,12 @@ export default function AdminPage() {
   useEffect(() => {
     const email = session?.user?.email ?? user?.email;
     if (!email) {
-      // not logged in -> show auth page
+      // not logged in -> auth page
       navigate('/auth', { replace: true });
       return;
     }
 
-    // allow only admin@company.com here (or extend with role check)
+    // allow only admin@company.com (or update with RPC/role check)
     if (email !== 'admin@company.com') {
       navigate('/dashboard', { replace: true });
     }

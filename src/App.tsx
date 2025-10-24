@@ -4,10 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
-import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
-import Admin from "./pages/Admin";
-import NotFound from "./pages/NotFound";
+import AdminPage from "./pages/admin";
+import DashboardPage from "./pages/dashboard";
 
 const queryClient = new QueryClient();
 
@@ -22,8 +21,8 @@ const App = () => (
             {/* root -> auth landing */}
             <Route path="/" element={<Navigate to="/auth" replace />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admin" element={<AdminPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
             {/* optional: catch-all -> auth */}
             <Route path="*" element={<Navigate to="/auth" replace />} />
           </Routes>
